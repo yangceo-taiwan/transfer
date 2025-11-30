@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>案件進度與交屋指南 - 宏國地政｜易丞地政</title>
+    <meta name="description" content="您的案件已送入地政辦理過戶程序。此頁面提供過戶、代償、交屋流程教學影片及檢核表。">
+    
+    <style>
+        :root {
+            --primary-color: #1a5f7a;   /* 品牌深藍 */
+            --accent-color: #d4a017;    /* 品牌金 */
+            --bg-color: #f4f4f4;        /* 背景灰 */
+            --card-bg: #ffffff;         /* 卡片白 */
+            --text-color: #333333;
+            --text-secondary: #666666;
+            --status-bg: #e8f5e9;       /* 進度條背景綠 */
+            --status-text: #2e7d32;     /* 進度文字綠 */
+        }
+
+        body {
+            font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 20px;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* --- 頭部區塊 (狀態回報) --- */
+        header {
+            background-color: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 5px solid var(--accent-color);
+        }
+
+        .logo-img {
+            max-width: 100%;
+            width: 220px;
+            height: auto;
+            border-radius: 10px;
+            border: 3px solid var(--accent-color);
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin: 10px 0;
+            font-size: 1.8em;
+        }
+
+        /* 進度通知區塊 */
+        .status-box {
+            background-color: var(--status-bg);
+            border: 2px solid var(--status-text);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 600px;
+            text-align: left;
+        }
+
+        .status-title {
+            color: var(--status-text);
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-title::before {
+            content: '📢';
+            margin-right: 10px;
+        }
+
+        .intro-text {
+            color: var(--text-secondary);
+            font-size: 1.05em;
+            margin-top: 15px;
+        }
+
+        /* --- 影片列表區塊 --- */
+        .video-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* 卡片樣式 */
+        .video-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        .card-header {
+            padding: 20px 20px 10px 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .video-number {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .video-title {
+            font-size: 1.3em;
+            color: var(--primary-color);
+            margin: 5px 0 0 0;
+            font-weight: bold;
+        }
+
+        .card-content {
+            padding: 20px;
+            color: var(--text-secondary);
+        }
+
+        /* 影片容器 */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        }
+
+        /* --- 交屋檢核表樣式 --- */
+        .checklist-section {
+            background-color: #fff8e1; /* 淺黃色背景 */
+            padding: 20px;
+            margin-top: 15px;
+            border-radius: 8px;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .checklist-title {
+            font-weight: bold;
+            color: #d84315;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .checklist-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        .checklist-box h4 { margin: 0 0 8px 0; color: var(--primary-color); }
+        .checklist-box ul { margin: 0; padding-left: 20px; }
+        .checklist-box li { margin-bottom: 5px; }
+
+        @media (min-width: 768px) {
+            .checklist-grid { grid-template-columns: 1fr 1fr; }
+        }
+
+        /* --- 底部 --- */
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            color: var(--text-secondary);
+        }
+
+        .yt-btn {
+            display: inline-block;
+            background-color: #ff0000;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header>
+        <img src="1764423253132_0.jpg" alt="宏國地政｜易丞地政 Logo" class="logo-img">
+        <h1>🥇 宏國地政｜易丞地政 ✨</h1>
+        
+        <div class="status-box">
+            <div class="status-title">案件進度通知</div>
+            <p>您好，目前您的案件已正式送入地政事務所，正在辦理過戶程序中。</p>
+            <p style="background-color: rgba(255,255,255,0.6); padding: 10px; border-radius: 5px; border-left: 4px solid var(--primary-color);">
+                🔍 <strong>查詢進度：</strong><br>
+                請參閱我們傳送至群組內的<strong>「領件單照片 (含QR Code)」</strong>，掃描該條碼即可即時掌握地政審核進度。
+            </p>
+
+            <hr style="border:0; border-top:1px solid #ccc; margin:15px 0;">
+            <p style="font-size:0.95em;">為了讓您更了解接下來的流程，我們特別準備了以下 <strong>3 部關鍵影片</strong>，包含過戶流程、代償細節及交屋注意事項，請您撥冗觀看 🙏</p>
+        </div>
+    </header>
+
+    <div class="video-list">
+
+        <article class="video-card">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/Qn5OTTTC4Xg" allowfullscreen></iframe>
+            </div>
+            <div class="card-header">
+                <span class="video-number">影片一</span>
+                <h2 class="video-title">🧾 房屋過戶六步驟，一次搞懂</h2>
+            </div>
+            <div class="card-content">
+                <p>你知道房屋過戶從簽約到交屋，其實有六個關鍵階段嗎❓</p>
+                <p>了解目前案件走到哪個步驟，讓您等待過程更安心。</p>
+            </div>
+        </article>
+
+        <article class="video-card">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/Dq5WPIYFdlo" allowfullscreen></iframe>
+            </div>
+            <div class="card-header">
+                <span class="video-number">影片二</span>
+                <h2 class="video-title">💰 為什麼需要貸款代償❓</h2>
+            </div>
+            <div class="card-content">
+                <p>什麼叫代償❓什麼是代償後餘額呢❓</p>
+                <p>這是買賣流程中資金流向最重要的一環，影片將詳細解說如何保障買賣雙方權益。</p>
+            </div>
+        </article>
+
+        <article class="video-card">
+            <div class="video-wrapper">
+                <iframe src="https://www.youtube.com/embed/2TjPlvDdiVc" allowfullscreen></iframe>
+            </div>
+            <div class="card-header">
+                <span class="video-number">影片三</span>
+                <h2 class="video-title">🔑 買房交屋流程全攻略</h2>
+            </div>
+            <div class="card-content">
+                <p>交屋時你該拿到什麼呢❓ 賣方又該準備什麼呢❓</p>
+                
+                <div class="checklist-section">
+                    <div class="checklist-title">📋 交屋應備事項速查表</div>
+                    
+                    <div class="checklist-grid">
+                        <div class="checklist-box">
+                            <h4>✅ 賣方準備：</h4>
+                            <ul>
+                                <li>交付所有鑰匙（含車位、電梯、信箱）</li>
+                                <li>若是新成屋，需移交「建設公司交屋包」(含保固書、使用手冊)</li>
+                                <li>提供垃圾清運方式、管理室聯絡資訊</li>
+                                <li>讓交接更貼心 ❤️</li>
+                            </ul>
+                        </div>
+
+                        <div class="checklist-box">
+                            <h4>✅ 買方注意：</h4>
+                            <ul>
+                                <li>過戶期間，可先約仲介「確認屋況」</li>
+                                <li>結案當天，確認收到：權狀、鑰匙、門禁卡</li>
+                                <li>領取仲介出具的服務費發票</li>
+                                <li>可選擇在房屋現場點交，或於仲介公司完成交接</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </article>
+
+    </div>
+
+    <footer>
+        <p>💡 服務專線：06-2582589<br>
+        📮 地址：台南市北區文賢路1080巷11號<br>
+        電子信箱：homegoestate@gmail.com</p>
+        
+        <a href="https://www.youtube.com/@ycl_real_estate8888" target="_blank" class="yt-btn">
+            📺 訂閱我們的 YouTube 頻道
+        </a>
+    </footer>
+
+</div>
+
+</body>
+</html>
