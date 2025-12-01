@@ -10,19 +10,25 @@
         :root {
             --primary-color: #1a5f7a;   /* 品牌深藍 */
             --accent-color: #d4a017;    /* 品牌金 */
-            --bg-color: #f4f4f4;        /* 背景灰 */
+            --bg-color: #f8f9fa;        /* 極簡灰白背景 */
             --card-bg: #ffffff;         /* 卡片白 */
             --text-color: #333333;
             --text-secondary: #666666;
-            --status-bg: #e8f5e9;       /* 進度條背景綠 */
-            --status-text: #2e7d32;     /* 進度文字綠 */
+            
+            /* 狀態色系 */
+            --status-bg: #e8f5e9;       /* 淺綠背景 */
+            --status-border: #c8e6c9;   /* 淺綠邊框 */
+            --status-text: #2e7d32;     /* 深綠文字 */
+
+            /* 懸浮按鈕顏色 */
+            --btn-yt: #FF0000;
         }
 
         body {
             font-family: "Microsoft JhengHei", "Heiti TC", sans-serif;
             background-color: var(--bg-color);
             margin: 0;
-            padding: 20px;
+            padding: 20px 20px 100px 20px; /* 底部加寬，避免被懸浮按鈕擋住 */
             color: var(--text-color);
             line-height: 1.6;
         }
@@ -32,111 +38,167 @@
             margin: 0 auto;
         }
 
-        /* --- 頭部區塊 (狀態回報) --- */
+        /* --- Header 優化：雙 Logo 佈局 --- */
         header {
             background-color: var(--card-bg);
-            padding: 30px;
+            padding: 30px 20px;
             border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.06);
             text-align: center;
             margin-bottom: 30px;
-            border-bottom: 5px solid var(--accent-color);
+            border-top: 6px solid var(--accent-color);
+        }
+
+        .logo-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
         .logo-img {
-            max-width: 100%;
-            width: 220px;
-            height: auto;
-            border-radius: 10px;
-            border: 3px solid var(--accent-color);
-            margin-bottom: 15px;
+            height: 65px; /* 統一高度 */
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-divider {
+            font-size: 20px;
+            color: #ccc;
+            font-weight: lighter;
         }
 
         h1 {
             color: var(--primary-color);
             margin: 10px 0;
-            font-size: 1.8em;
+            font-size: 1.6em;
+            letter-spacing: 1px;
         }
 
-        /* 進度通知區塊 */
+        /* --- 進度通知區塊 (Status Box) --- */
         .status-box {
             background-color: var(--status-bg);
-            border: 2px solid var(--status-text);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px auto;
-            max-width: 600px;
+            border: 1px solid var(--status-border);
+            padding: 25px;
+            border-radius: 12px;
+            margin: 25px auto 10px auto; /* 上下邊距 */
+            max-width: 650px;
             text-align: left;
+            position: relative;
+        }
+        
+        /* 裝飾性的小圓點 */
+        .status-box::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            background-color: var(--status-text);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(46, 125, 50, 0.2);
         }
 
         .status-title {
             color: var(--status-text);
             font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 10px;
+            font-size: 1.25em;
+            margin-bottom: 15px;
+            margin-left: 25px; /* 避開圓點 */
             display: flex;
             align-items: center;
         }
-        
-        .status-title::before {
-            content: '📢';
-            margin-right: 10px;
+
+        .status-content {
+            font-size: 1.05em;
+            color: #444;
+            margin-bottom: 15px;
         }
 
-        .intro-text {
-            color: var(--text-secondary);
-            font-size: 1.05em;
+        .qr-instruction {
+            background-color: rgba(255,255,255,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            font-size: 0.95em;
             margin-top: 15px;
         }
 
-        /* --- 影片列表區塊 --- */
+        .section-divider {
+            margin: 30px 0;
+            border: 0;
+            border-top: 1px dashed #ddd;
+            position: relative;
+        }
+        
+        .section-divider::after {
+            content: '流程影片教學';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--bg-color);
+            padding: 0 15px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        /* --- 影片卡片樣式 --- */
         .video-list {
-            display: flex;
-            flex-direction: column;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 25px;
         }
 
-        /* 卡片樣式 */
         .video-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             overflow: hidden;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #eee;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
         }
 
         .card-header {
-            padding: 20px 20px 10px 20px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 20px 20px 5px 20px;
         }
 
         .video-number {
             display: inline-block;
             background-color: var(--primary-color);
             color: white;
-            padding: 2px 10px;
-            border-radius: 20px;
+            padding: 4px 12px;
+            border-radius: 4px;
             font-size: 0.85em;
             font-weight: bold;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
         }
 
         .video-title {
             font-size: 1.3em;
             color: var(--primary-color);
-            margin: 5px 0 0 0;
+            margin: 0;
             font-weight: bold;
+            line-height: 1.4;
         }
 
         .card-content {
-            padding: 20px;
+            padding: 10px 20px 25px 20px;
             color: var(--text-secondary);
+            font-size: 0.95em;
         }
 
-        /* 影片容器 */
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 */
+            padding-bottom: 56.25%;
             height: 0;
             overflow: hidden;
             background: #000;
@@ -147,20 +209,24 @@
             top: 0; left: 0; width: 100%; height: 100%; border: 0;
         }
 
-        /* --- 交屋檢核表樣式 --- */
+        /* --- 交屋檢核表樣式 (Checklist) --- */
         .checklist-section {
-            background-color: #fff8e1; /* 淺黃色背景 */
+            background-color: #fff8e1; /* 溫暖的便條紙黃 */
             padding: 20px;
-            margin-top: 15px;
+            margin-top: 20px;
             border-radius: 8px;
-            border-left: 5px solid var(--accent-color);
+            border-left: 5px solid #ffb300;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
         }
 
         .checklist-title {
             font-weight: bold;
             color: #d84315;
-            margin-bottom: 10px;
+            margin-bottom: 15px;
             font-size: 1.1em;
+            text-align: center;
+            border-bottom: 1px dashed #d84315;
+            padding-bottom: 10px;
         }
 
         .checklist-grid {
@@ -169,15 +235,24 @@
             gap: 20px;
         }
 
-        .checklist-box h4 { margin: 0 0 8px 0; color: var(--primary-color); }
-        .checklist-box ul { margin: 0; padding-left: 20px; }
-        .checklist-box li { margin-bottom: 5px; }
-
-        @media (min-width: 768px) {
-            .checklist-grid { grid-template-columns: 1fr 1fr; }
+        .checklist-box h4 { 
+            margin: 0 0 10px 0; 
+            color: var(--primary-color); 
+            font-size: 1.1em;
+        }
+        
+        .checklist-box ul { 
+            margin: 0; 
+            padding-left: 20px; 
+            list-style-type: circle;
+        }
+        
+        .checklist-box li { 
+            margin-bottom: 8px; 
+            line-height: 1.5;
         }
 
-        /* --- 底部 --- */
+        /* --- Footer --- */
         footer {
             text-align: center;
             margin-top: 40px;
@@ -185,18 +260,62 @@
             background-color: var(--card-bg);
             border-radius: 15px;
             color: var(--text-secondary);
+            font-size: 0.95em;
+            margin-bottom: 60px; /* 留白給懸浮按鈕 */
         }
 
-        .yt-btn {
-            display: inline-block;
-            background-color: #ff0000;
+        /* --- 全新懸浮按鈕 (Sticky Button) --- */
+        .sticky-footer {
+            position: fixed;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            max-width: 400px;
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+        }
+
+        .sticky-yt-btn {
+            background-color: var(--btn-yt);
             color: white;
             text-decoration: none;
-            padding: 10px 20px;
+            padding: 14px 30px;
             border-radius: 50px;
             font-weight: bold;
-            margin-top: 10px;
-            font-size: 0.9em;
+            font-size: 1.1em;
+            box-shadow: 0 8px 20px rgba(255, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: transform 0.2s;
+            animation: pulse 2s infinite; /* 呼吸動畫 */
+            width: 100%;
+            justify-content: center;
+        }
+
+        .sticky-yt-btn:active { transform: scale(0.95); }
+        
+        /* 播放圖示 */
+        .play-icon {
+            width: 0; 
+            height: 0; 
+            border-top: 7px solid transparent;
+            border-bottom: 7px solid transparent;
+            border-left: 12px solid white;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(255, 0, 0, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255, 0, 0, 0); }
+        }
+
+        /* RWD */
+        @media (min-width: 768px) {
+            .checklist-grid { grid-template-columns: 1fr 1fr; }
+            .sticky-yt-btn { width: auto; min-width: 300px; }
         }
     </style>
 </head>
@@ -205,55 +324,67 @@
 <div class="container">
     
     <header>
-        <img src="1764423253132_0.jpg" alt="宏國地政｜易丞地政 Logo" class="logo-img">
-        <h1>🥇 宏國地政｜易丞地政 ✨</h1>
+        <div class="logo-wrapper">
+            <img src="宏國地政封面.jpg" alt="宏國地政" class="logo-img">
+            <span class="logo-divider">✕</span>
+            <img src="易丞logo-01.jpg" alt="易丞地政" class="logo-img">
+        </div>
+
+        <h1>🥇 案件進度與交屋指南</h1>
         
         <div class="status-box">
             <div class="status-title">案件進度通知</div>
-            <p>您好，目前您的案件已正式送入地政事務所，正在辦理過戶程序中。</p>
-            <p style="background-color: rgba(255,255,255,0.6); padding: 10px; border-radius: 5px; border-left: 4px solid var(--primary-color);">
+            <div class="status-content">
+                您好，目前您的案件已正式送入地政事務所，正在辦理過戶程序中。
+            </div>
+            
+            <div class="qr-instruction">
                 🔍 <strong>查詢進度：</strong><br>
                 請參閱我們傳送至群組內的<strong>「領件單照片 (含QR Code)」</strong>，掃描該條碼即可即時掌握地政審核進度。
-            </p>
-
-            <hr style="border:0; border-top:1px solid #ccc; margin:15px 0;">
-            <p style="font-size:0.95em;">為了讓您更了解接下來的流程，我們特別準備了以下 <strong>3 部關鍵影片</strong>，包含過戶流程、代償細節及交屋注意事項，請您撥冗觀看 🙏</p>
+            </div>
         </div>
+
+        <p style="color: #666; margin-top: 20px; font-size: 0.95em;">
+            為了讓您更了解接下來的流程，我們特別準備了以下 <strong>3 部關鍵影片</strong>，<br>
+            包含過戶流程、代償細節及交屋注意事項，請您撥冗觀看 🙏
+        </p>
     </header>
+    
+    <hr class="section-divider">
 
     <div class="video-list">
 
         <article class="video-card">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/Qn5OTTTC4Xg" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/Qn5OTTTC4Xg" allowfullscreen title="房屋過戶六步驟"></iframe>
             </div>
             <div class="card-header">
                 <span class="video-number">影片一</span>
                 <h2 class="video-title">🧾 房屋過戶六步驟，一次搞懂</h2>
             </div>
             <div class="card-content">
-                <p>你知道房屋過戶從簽約到交屋，其實有六個關鍵階段嗎❓</p>
-                <p>了解目前案件走到哪個步驟，讓您等待過程更安心。</p>
+                <p>你知道房屋過戶從簽約到交屋，其實有六個關鍵階段嗎❓<br>
+                了解目前案件走到哪個步驟，讓您等待過程更安心。</p>
             </div>
         </article>
 
         <article class="video-card">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/Dq5WPIYFdlo" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/Dq5WPIYFdlo" allowfullscreen title="代償流程"></iframe>
             </div>
             <div class="card-header">
                 <span class="video-number">影片二</span>
                 <h2 class="video-title">💰 為什麼需要貸款代償❓</h2>
             </div>
             <div class="card-content">
-                <p>什麼叫代償❓什麼是代償後餘額呢❓</p>
-                <p>這是買賣流程中資金流向最重要的一環，影片將詳細解說如何保障買賣雙方權益。</p>
+                <p>什麼叫代償❓什麼是代償後餘額呢❓<br>
+                這是買賣流程中資金流向最重要的一環，影片將詳細解說如何保障買賣雙方權益。</p>
             </div>
         </article>
 
         <article class="video-card">
             <div class="video-wrapper">
-                <iframe src="https://www.youtube.com/embed/2TjPlvDdiVc" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/2TjPlvDdiVc" allowfullscreen title="交屋流程"></iframe>
             </div>
             <div class="card-header">
                 <span class="video-number">影片三</span>
@@ -269,10 +400,10 @@
                         <div class="checklist-box">
                             <h4>✅ 賣方準備：</h4>
                             <ul>
-                                <li>交付所有鑰匙（含車位、電梯、信箱）</li>
-                                <li>若是新成屋，需移交「建設公司交屋包」(含保固書、使用手冊)</li>
-                                <li>提供垃圾清運方式、管理室聯絡資訊</li>
-                                <li>讓交接更貼心 ❤️</li>
+                                <li>交付所有鑰匙<br><small>(含車位、電梯、信箱)</small></li>
+                                <li>若是新成屋，需移交「建設公司交屋包」<br><small>(含保固書、使用手冊)</small></li>
+                                <li>提供垃圾清運方式</li>
+                                <li>提供管理室聯絡資訊</li>
                             </ul>
                         </div>
 
@@ -287,8 +418,7 @@
                         </div>
                     </div>
                 </div>
-
-            </div>
+                </div>
         </article>
 
     </div>
@@ -296,13 +426,17 @@
     <footer>
         <p>💡 服務專線：06-2582589<br>
         📮 地址：台南市北區文賢路1080巷11號<br>
-        電子信箱：homegoestate@gmail.com</p>
-        
-        <a href="https://www.youtube.com/@ycl_real_estate8888" target="_blank" class="yt-btn">
-            📺 訂閱我們的 YouTube 頻道
-        </a>
+        📧 homegoestate@gmail.com<br><br>
+        <strong>宏國地政｜易丞地政</strong> 祝您順利成家！🏠</p>
     </footer>
 
+</div>
+
+<div class="sticky-footer">
+    <a href="https://www.youtube.com/@ycl_real_estate8888?sub_confirmation=1" target="_blank" class="sticky-yt-btn">
+        <div class="play-icon"></div>
+        訂閱頻道，掌握最新法規
+    </a>
 </div>
 
 </body>
